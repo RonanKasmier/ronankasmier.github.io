@@ -1,0 +1,23 @@
+{
+  "name": "ronankasmier.github.io",
+  "version": "1.0.0",
+  "description": "Github Website. Purpose tbd.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RonanKasmier/ronankasmier.github.io.git"
+  },
+  "author": "Ronan Kasmier",
+  "license": "GNU",
+  "bugs": {
+    "url": "https://github.com/RonanKasmier/ronankasmier.github.io/issues"
+  },
+  "homepage": "https://github.com/RonanKasmier/ronankasmier.github.io#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}
