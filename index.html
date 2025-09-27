@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <form id="form1">
+        <input id="checkbox1" type="checkbox">
+            
+        </input>
+    </form>
+    <script src="socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        const socket = io();
+
+        const checkbox = document.getElementById("checkbox1");
+
+        checkbox.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log("checked?");
+        });
+    </script>
+</html>
