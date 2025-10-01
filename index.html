@@ -2,20 +2,23 @@
 <html>
     <body>
     <form id="form1">
-        <input id="checkbox1" type="checkbox">
-            
-        </input>
+        <input id="checkbox1" type="checkbox" checked=false></input>
+        <input id="check_button" type="button">Submit</input>
     </form>
     <script src="socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        const socket = io();
+        console.log("init load");
+        window.onload = function(){
+            console.log("window loaded");
+            checkbox.checked = false;
+        }
 
-        const checkbox = document.getElementById("form1");
+        let check_button = document.getElementById("check_button");
+        let checkbox = document.getElementById("checkbox1");
 
-        checkbox.addEventListener('click', (e) => {
-            e.preventDefault();
-            console.log("checked?");
-        });
+        check_button.onclick = function(){
+            console.log(checkbox.checked);
+        }
     </script>
     </body>
 </html>

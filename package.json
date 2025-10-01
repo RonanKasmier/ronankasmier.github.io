@@ -18,6 +18,8 @@
   "homepage": "https://github.com/RonanKasmier/ronankasmier.github.io#readme",
   "dependencies": {
     "express": "^4.21.2",
+    "node": "^24.9.0",
+    "node.js": "^0.0.1-security",
     "socket.io": "^4.8.1"
   }
 }
