@@ -13,13 +13,13 @@
             <b><input id="cube-adder-button" type="button">Press to add Cube</input></b>
             <br/>
             <b><input id="cube-remover-button" type="button">Press to remove Cube</input></b>
-            <br/><input id="cube-pass" type="text">Pass Code</input>
+            <br/><!--input id="cube-pass" type="text">Pass Code</input-->
         </form>
         <script src="socket.io/socket.io.js"></script>
         <script type="text/javascript">
-            console.log("init load");
+            //console.log("init load");
             window.onload = function(){
-                console.log("window loaded");
+                //console.log("window loaded");
             }
 
             const socket = io();
@@ -59,24 +59,33 @@
             });
 
             socket.on('receive-cube', (data) => {
-                console.log(data.toString());
-
-                update_cube_html(data);
-
+                //console.log(data.toString());
                 current_cube = data;
+                update_cube_html(data);
             });
 
             add_button.addEventListener('click', () => {
                 const cube = {title: text_title.value, desc: text_desc.value, src: text_src.value};
-                socket.emit('add-cube', cube, text_pass.value);
-                console.log(text_src.value);
-                current_cube = cube;
-                update_cube_html(cube);
+                let p_text = window.prompt("Enter Passcode to Add a Cube", "");
+                if((p_text == "" || p_text == null)){
+
+                }else{
+                    socket.emit('add-cube', cube, p_text);
+                    current_cube = cube;
+                    update_cube_html(cube);
+                }
+                //console.log(text_src.value);
+
             });
 
             remove_button.addEventListener('click', () => {
-                socket.emit('remove-cube', {title: current_cube.title}, text_pass.value); //Removes the cube currently loaded
-                clear_cube_html();
+                let p_text = prompt("Enter Passcode to Remove a Cube");
+                if((p_text == "" || p_text == null)){
+
+                }else{
+                    socket.emit('remove-cube', {title: current_cube.title}, p_text); //Removes the cube currently loaded
+                    clear_cube_html();
+                }
             });
 
             text_src.addEventListener('blur', () => {
@@ -85,6 +94,17 @@
                     img.src = text_src.value;
                 }else{
                     update_cube_html(current_cube);
+                }
+            });
+
+            socket.on('passcode', (data) => {
+                if(!data.valid){
+                    alert("Incorrect Passcode");   
+                }else{
+                    switch (data.action){
+                        case 'add': alert("You added a famous cube to famouscubes.com!");
+                        default:
+                    }
                 }
             });
 

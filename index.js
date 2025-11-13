@@ -89,9 +89,15 @@ io.on('connection', (socket) => {
             const parsed_desc = /[\w ;.,]+/.exec(data.desc.toString());
             const parsed_src = /[^\s]+/.exec(data.src.toString());
             if(parsed_title !== null && parsed_desc !== null && parsed_src !== null && !data_base.q_contains(parsed_title[0])){
-                data_base.q_insert({title: parsed_title[0], desc: parsed_desc[0], src: parsed_src[0]});
+                const cube = {title: parsed_title[0], desc: parsed_desc[0], src: parsed_src[0]}
+                data_base.q_insert(cube);
                 data_base.size++;
+                socket.emit('passcode', {valid: true, action: 'add'});
+
+                console.log(`Cube added: ${cube.title}`);
             }
+        }else{
+            socket.emit('passcode', {valid: false, action: 'add'});
         }
         }catch(e){
             //console.error(e);
@@ -102,16 +108,23 @@ io.on('connection', (socket) => {
     socket.on('remove-cube', (data, pass) => {
         //if(data.toString() instanceof String){
             const parsed_title = /[^\s]+/.exec(data.title.toString());
-            if(parsed_title !== null && data_base.q_contains(parsed_title[0]) && pass == "cubes"){
-                data_base.q_remove(parsed_title[0]);
-                data_base.size--;
+            if(pass == "cubes"){
+                if(parsed_title !== null && data_base.q_contains(parsed_title[0])){
+                    data_base.q_remove(parsed_title[0]);
+                    data_base.size--;
+                    socket.emit('passcode', {valid: true, action: 'remove'});
+
+                    console.log(`Cube removed: ${parsed_title[0]}`);
+                }
+            }else{
+                socket.emit('passcode', {valid: false, action: 'remove'});
             }
         //}
         //console.log(data_base.q_get_all());
     });
 })
 
-server.listen(80, "famouscubes.com", () => {
+server.listen(80, "localhost", () => {
     //console.log(`listening on port`);
 });
 
