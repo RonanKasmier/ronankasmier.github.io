@@ -13,7 +13,7 @@ const server = createServer(app);
 const io = new Server(server);
 
 const _dirname = dirname(fileURLToPath(import.meta.url));
-const html_file_str = "\\index.html";
+const html_file_str = "\/index.html";
 app.use('/images', express.static('images'));
 
 app.get('/', (req, res) => {
