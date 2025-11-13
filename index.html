@@ -1,24 +1,95 @@
 <!DOCTYPE html>
 <html>
     <body>
-    <form id="form1">
-        <input id="checkbox1" type="checkbox" checked=false></input>
-        <input id="check_button" type="button">Submit</input>
-    </form>
-    <script src="socket.io/socket.io.js"></script>
-    <script type="text/javascript">
-        console.log("init load");
-        window.onload = function(){
-            console.log("window loaded");
-            checkbox.checked = false;
-        }
+        <h2 id="cube-title">None</h2>
+        <p><b>Description: </b><a id="cube-desc">None</a></p><br/>
+        <img id="cube-image" src="" width="400" height="400">
+        <form id="cube-data-interaction" onsubmit="return false">
+            <b><input id="cube-getter-button" type="button">Press to get Cube</input></b>
+            <br/>
+            <p>Title Text: <input id="cube-adder-title" type="text"/></p>
+            <p>Description Text <input id="cube-adder-desc" type="textarea"/></p>
+            <p>URL: <input id="cube-adder-src" type="text"/></p>
+            <b><input id="cube-adder-button" type="button">Press to add Cube</input></b>
+            <br/>
+            <b><input id="cube-remover-button" type="button">Press to remove Cube</input></b>
+            <br/><input id="cube-pass" type="text">Pass Code</input>
+        </form>
+        <script src="socket.io/socket.io.js"></script>
+        <script type="text/javascript">
+            console.log("init load");
+            window.onload = function(){
+                console.log("window loaded");
+            }
 
-        let check_button = document.getElementById("check_button");
-        let checkbox = document.getElementById("checkbox1");
+            const socket = io();
 
-        check_button.onclick = function(){
-            console.log(checkbox.checked);
-        }
+            let cube_title = document.getElementById("cube-title");
+            let cube_desc = document.getElementById("cube-desc");
+
+            let get_button = document.getElementById("cube-getter-button");
+            let add_button = document.getElementById("cube-adder-button");
+            let remove_button = document.getElementById("cube-remover-button");
+            
+            let text_title = document.getElementById("cube-adder-title");
+            let text_desc = document.getElementById("cube-adder-desc");
+            let text_src = document.getElementById("cube-adder-src");
+            let text_pass = document.getElementById("cube-pass");
+
+            let img = document.getElementById("cube-image");
+
+            //data = {title, desc, src}
+
+            let current_cube = {title: 'None', desc: 'None', src: ''};
+
+            function clear_cube_html(){
+                img.src = '';
+                cube_title.innerHTML = 'None';
+                cube_desc.innerHTML = 'None';
+            }
+
+            function update_cube_html (data){
+                img.src = data.src;
+                cube_title.innerHTML = data.title;
+                cube_desc.innerHTML = data.desc;
+            }
+
+            get_button.addEventListener('click', () => {
+                socket.emit('get-cube', {title: text_title.value});
+            });
+
+            socket.on('receive-cube', (data) => {
+                console.log(data.toString());
+
+                update_cube_html(data);
+
+                current_cube = data;
+            });
+
+            add_button.addEventListener('click', () => {
+                const cube = {title: text_title.value, desc: text_desc.value, src: text_src.value};
+                socket.emit('add-cube', cube, text_pass.value);
+                console.log(text_src.value);
+                current_cube = cube;
+                update_cube_html(cube);
+            });
+
+            remove_button.addEventListener('click', () => {
+                socket.emit('remove-cube', {title: current_cube.title}, text_pass.value); //Removes the cube currently loaded
+                clear_cube_html();
+            });
+
+            text_src.addEventListener('blur', () => {
+                if(text_src.value != ''){
+                    clear_cube_html();
+                    img.src = text_src.value;
+                }else{
+                    update_cube_html(current_cube);
+                }
+            });
+
+
+            
     </script>
     </body>
 </html>
