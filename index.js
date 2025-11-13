@@ -124,7 +124,7 @@ io.on('connection', (socket) => {
     });
 })
 
-server.listen(80, "localhost", () => {
+server.listen(80, "famouscubes.com", () => {
     //console.log(`listening on port`);
 });
 
