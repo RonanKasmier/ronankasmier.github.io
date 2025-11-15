@@ -86,7 +86,7 @@ io.on('connection', (socket) => {
         try{
         if(data_base.size < data_base.max_size && pass == "cubes"/* && data.toString() instanceof String*/){
             const parsed_title = /[^\s]+/.exec(data.title.toString());
-            const parsed_desc = /[\w ;.,]+/.exec(data.desc.toString());
+            const parsed_desc = /[\w\d ;.,]+/.exec(data.desc.toString());
             const parsed_src = /[^\s]+/.exec(data.src.toString());
             if(parsed_title !== null && parsed_desc !== null && parsed_src !== null && !data_base.q_contains(parsed_title[0])){
                 const cube = {title: parsed_title[0], desc: parsed_desc[0], src: parsed_src[0]}
@@ -105,10 +105,11 @@ io.on('connection', (socket) => {
         //console.log(data_base.q_get_all());
     });
 
+    //REMOVE CUBE IS DISABLED FOR NOW
     socket.on('remove-cube', (data, pass) => {
         //if(data.toString() instanceof String){
             const parsed_title = /[^\s]+/.exec(data.title.toString());
-            if(pass == "cubes"){
+            if(false && pass == "cubes"){
                 if(parsed_title !== null && data_base.q_contains(parsed_title[0])){
                     data_base.q_remove(parsed_title[0]);
                     data_base.size--;
@@ -124,7 +125,7 @@ io.on('connection', (socket) => {
     });
 })
 
-server.listen(80, "famouscubes.com", () => {
+server.listen(80, "localhost", () => {
     //console.log(`listening on port`);
 });
 

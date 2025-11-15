@@ -1,18 +1,48 @@
 <!DOCTYPE html>
+<style>
+   body {
+    background-blend-mode: color;
+    background-color:rgb(203, 252, 255);
+    color-scheme: light dark;
+   }
+   h2, p, b, form{
+        text-align: center;
+        font-family: 'Ludica Console', monospace
+    }
+    #cube-image {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        border-style:groove;
+        border-width: 8mm;
+        border-color: rgb(125, 60, 0);
+    }
+    .button-div {
+        display: inline-block;
+        color: rgb(193, 40, 40);
+        padding: 32px 32px;
+        text-align: center;
+    }
+    .button {
+        text-align: left;
+    }
+</style>
 <html>
     <body>
         <h2 id="cube-title">None</h2>
         <p><b>Description: </b><a id="cube-desc">None</a></p><br/>
         <img id="cube-image" src="" width="400" height="400">
         <form id="cube-data-interaction" onsubmit="return false">
-            <b><input id="cube-getter-button" type="button">Press to get Cube</input></b>
-            <br/>
-            <p>Title Text: <input id="cube-adder-title" type="text"/></p>
-            <p>Description Text <input id="cube-adder-desc" type="textarea"/></p>
-            <p>URL: <input id="cube-adder-src" type="text"/></p>
-            <b><input id="cube-adder-button" type="button">Press to add Cube</input></b>
-            <br/>
-            <b><input id="cube-remover-button" type="button">Press to remove Cube</input></b>
+            <div class="button-div">
+                <b><input id="cube-getter-button" type="button">Press to get a random Cube</input></b>
+                <br/>
+                <b><input id="cube-adder-button" type="button">Press to add Cube</input></b>
+                <p>Title Text: <input id="cube-adder-title" type="text"/></p>
+                <p>Description Text <input id="cube-adder-desc" type="textarea"/></p>
+                <p>URL: <input id="cube-adder-src" type="text"/></p>
+                <br/>
+                <b><!--input id="cube-remover-button" type="button">Press to remove Cube</input--></b>
+            </div>
             <br/><!--input id="cube-pass" type="text">Pass Code</input-->
         </form>
         <script src="socket.io/socket.io.js"></script>
