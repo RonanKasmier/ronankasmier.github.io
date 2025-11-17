@@ -19,7 +19,7 @@ app.use('/images', express.static('images'));
 app.get('/', (req, res) => {
     //console.log(req.headers);
     res.sendFile(join(_dirname, html_file_str));
-    console.log(req.ip);
+    //console.log(req.ip);
 });
 
 
@@ -94,7 +94,12 @@ io.on('connection', (socket) => {
                 data_base.size++;
                 socket.emit('passcode', {valid: true, action: 'add'});
 
-                console.log(`Cube added: ${cube.title} by ${socket.id}`);
+                const socket_header_x = socket.handshake.headers["x-forwarded-for"];
+                let ip_string = "";
+                if(ip_string != null){
+                    ip_string = socket_header_x.split(',')[0];
+                }
+                console.log(`Cube added: ${cube.title} by ${ip_string}`);
             }
         }else{
             socket.emit('passcode', {valid: false, action: 'add'});
@@ -125,7 +130,7 @@ io.on('connection', (socket) => {
     });
 })
 
-server.listen(80, "74.208.99.118", () => {
+server.listen(80, "74.208.99.11 8", () => {
     //console.log(`listening on port`);
 });
 
