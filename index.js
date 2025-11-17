@@ -19,7 +19,7 @@ app.use('/images', express.static('images'));
 app.get('/', (req, res) => {
     //console.log(req.headers);
     res.sendFile(join(_dirname, html_file_str));
-    //console.log(req.ip);
+    console.log(req.ip);
 });
 
 
@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
                 data_base.size++;
                 socket.emit('passcode', {valid: true, action: 'add'});
 
-                console.log(`Cube added: ${cube.title}`);
+                console.log(`Cube added: ${cube.title} by ${socket.id}`);
             }
         }else{
             socket.emit('passcode', {valid: false, action: 'add'});
