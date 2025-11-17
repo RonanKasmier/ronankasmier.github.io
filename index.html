@@ -4,78 +4,39 @@
     background-blend-mode: color;
     background-color:rgb(203, 252, 255);
     color-scheme: light dark;
-    font-family: 'Ludica Console', monospace;
-    text-align: left;
    }
-   .title-div{
-    display:inline-block;
-    text-align:center;
-    margin-left: 450px;
-   }
+   h2, p, b, form{
+        text-align: center;
+        font-family: 'Ludica Console', monospace
+    }
     #cube-image {
-        background-color: white;
         display: block;
         margin-left: auto;
-        margin-right: 50%;
-        border-style: groove;
+        margin-right: auto;
+        border-style:groove;
         border-width: 8mm;
         border-color: rgb(125, 60, 0);
     }
-    #cube-data-interaction{
-        display: block;
-        margin-left: 2%;
-        margin-right: auto;
-        text-align:center;
-    }
-
-    .cube-data {
-        display: flex;
-        text-align:center;
-    }
-    .cube-button-div {
-        display: block;
-        width: auto;
-        height: auto;
+    .button-div {
+        display: inline-block;
         color: rgb(193, 40, 40);
-        padding-top: 32px;
-        line-height: 10mm;
+        padding: 32px 32px;
+        text-align: center;
+    }
+    .button {
         text-align: left;
     }
-    .cube-button {
-        width: auto;
-        display: inline-block;
-        margin-top: 8px;
-        margin-left: 10px;
-        margin-right: 10px;
-        padding: 8px 16px;
-        background-color: rgb(165, 165, 165);
-        border-color:rgb(133, 133, 133);
-    }
-    .cube-text-input-div {
-        display: block;
-        color: rgb(193, 40, 40);
-        line-height: 5mm;
-        text-align: center;
-        padding: 8px 32px;
-        margin: 5px 32px
-    }
-
 </style>
 <html>
     <body>
-        <div class="title-div">
-            <h2 id="cube-title">None</h2>
-            <p><b>Description: </b><a id="cube-desc">None</a></p><br/>
-        </div>
-        <div id='cube-data' class="cube-data">
+        <h2 id="cube-title">None</h2>
+        <p><b>Description: </b><a id="cube-desc">None</a></p><br/>
+        <img id="cube-image" src="" width="400" height="400">
         <form id="cube-data-interaction" onsubmit="return false">
-            <div class="cube-button-div">
-                <b><input id="cube-getter-button" class='cube-button' type="button">Press to get a random Cube</input></b>
+            <div class="button-div">
+                <b><input id="cube-getter-button" type="button">Press to get a random Cube</input></b>
                 <br/>
-                <b><input id="cube-adder-button" class='cube-button' type="button">Press to add Cube</input></b>
-            </div>
-            <div class="cube-text-input-div">
-                <u>New Cube Data:</u>
+                <b><input id="cube-adder-button" type="button">Press to add Cube</input></b>
                 <p>Title Text: <input id="cube-adder-title" type="text"/></p>
                 <p>Description Text <input id="cube-adder-desc" type="textarea"/></p>
                 <p>URL: <input id="cube-adder-src" type="text"/></p>
@@ -84,8 +45,6 @@
             </div>
             <br/><!--input id="cube-pass" type="text">Pass Code</input-->
         </form>
-        <img id="cube-image" src="" width="400" height="400">
-        </div class='cube-data'>
         <script src="socket.io/socket.io.js"></script>
         <script type="text/javascript">
             //console.log("init load");
@@ -100,7 +59,7 @@
 
             let get_button = document.getElementById("cube-getter-button");
             let add_button = document.getElementById("cube-adder-button");
-            //let remove_button = document.getElementById("cube-remover-button");
+            let remove_button = document.getElementById("cube-remover-button");
             
             let text_title = document.getElementById("cube-adder-title");
             let text_desc = document.getElementById("cube-adder-desc");
@@ -149,7 +108,7 @@
 
             });
 
-            /*remove_button.addEventListener('click', () => {
+            remove_button.addEventListener('click', () => {
                 let p_text = prompt("Enter Passcode to Remove a Cube");
                 if((p_text == "" || p_text == null)){
 
@@ -157,7 +116,7 @@
                     socket.emit('remove-cube', {title: current_cube.title}, p_text); //Removes the cube currently loaded
                     clear_cube_html();
                 }
-            });*/
+            });
 
             text_src.addEventListener('blur', () => {
                 if(text_src.value != ''){
