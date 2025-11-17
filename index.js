@@ -130,7 +130,7 @@ io.on('connection', (socket) => {
     });
 })
 
-server.listen(80, "74.208.99.11 8", () => {
+server.listen(80, "74.208.99.11", () => {
     //console.log(`listening on port`);
 });
 
